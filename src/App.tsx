@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+
+import CreatePost from "./pages/createPost";
+import PostList from "./pages/postList";
+import ReadPost from "./pages/readPost";
+import UpdatePost from "./pages/updatePost";
+
+import "./App.css";
+import "./custom.scss";
+
+// Implement all required features and enhancements to Editor
+// required packages are installed: see package.json
+// See this page: https://www.npmjs.com/package/@uiw/react-md-editor
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<CreatePost />} />
+        <Route path="/update/:postId" element={<UpdatePost />} />
+        <Route path="/post">
+          <Route path="" element={<PostList />} />
+          <Route path=":postId" element={<ReadPost />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
