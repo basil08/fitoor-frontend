@@ -5,6 +5,7 @@
 3. setup database on mongodb
 4. deploy backend on vercel
 5. integrate frontend with deployed backend
+6. sanitize input to createPost before POSTing
 
 Add images feature
 
