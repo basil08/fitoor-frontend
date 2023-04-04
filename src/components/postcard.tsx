@@ -10,7 +10,7 @@ export default function PostCard(props: any) {
     <>
       <div className="card p-1 m-2 rounded">
         <div className="card-body">
-          <a href={`/post/${post.id}`}>
+          <a href={`/post/${post._id}`}>
             <h5 className="card-title">{post.title}</h5>
           </a>
 
@@ -35,19 +35,21 @@ export default function PostCard(props: any) {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="staticBackdropLabel">Modal title</h5>
+                  <h5 className="modal-title" id="staticBackdropLabel">Are you sure?</h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                  ...
+                  You are about to delete post {post.title}! Do you wish to continue?
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" className="btn btn-primary">Understood</button>
+                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" className="btn btn-primary" onClick={() => handleDelete(post._id)} data-bs-dismiss="modal">Yes</button>
                 </div>
               </div>
             </div>
           </div>
+
+          
         </div>
       </div>
     </>

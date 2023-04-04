@@ -2,39 +2,37 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import Header from "../components/header";
+import { fetchPost } from "../utils/api";
 
 export default function ReadPost() {
   const { postId } = useParams();
-  // const [postData, setPostData] = useState();
-  const [error, setError] = useState();
+  const [postData, setPostData] = useState<any>(null);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const BASE_URL = "http://localhost:8080";
+  const getPostData = async () => {
+    setIsLoading(true);
+    if (postId) {
+      const data = await fetchPost(postId);
+      if (!data.error) {
+        console.log(data);
+        setPostData(data);
+        setIsLoading(false);
+      } else {
+        setError(data.message);
+        setIsLoading(false);
+      }
+    } else {
+      setError("No post Id provided!");
+    }
+  };
 
-  // const getPostData = async () => {
-  //   const res: any = await fetch(`${BASE_URL}/api/getPost?id=${postId}`, {
-  //     method: "GET",
-  //   });
-
-  //   if (res.status === 200) {
-  //     setPostData(res.data);
-  //   } else {
-  //     setError(res.error);
-  //   }
-  // };
-
-  // useEffect(() => { getPostData()}, []);
+  useEffect(() => { getPostData()}, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
   }, []);
 
-  const postData = {
-    id: 1,
-    title: "Title 1",
-    body: "This is blog body",
-    timestamp: "2023-03-26T12:59:26.133Z",
-    rawText: "# hello, fitoor\n\nThis is a paragraph, I guess?",
-  };
 
   return (
     <>
@@ -42,7 +40,7 @@ export default function ReadPost() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-6">
-            {!postData && (
+            {isLoading && (
               <div className="spinner-border" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
@@ -56,7 +54,7 @@ export default function ReadPost() {
                     </div>
                   </div>
                   <MDEditor.Markdown
-                    source={postData.rawText}
+                    source={postData.raw}
                     style={{ whiteSpace: "pre-wrap" }}
                   />
                 </div>
