@@ -40,12 +40,15 @@ export default function PostList() {
     const data = await deletePost(postId);
 
     if (!data.error) {
-      setInfo('Successfully deleted post!');
-      setTotalPostCount(totalPostCount - 1);
+      if (data.deletedCount <= 0) {
+        setError("Could not find the post specified!");
+      } else {
+        setInfo('Successfully deleted post!');
+        setTotalPostCount(totalPostCount - 1);
+      }
     } else {
       setError("Could not delete post. Check logs");
     }
-
   }
 
   const handlePageClick = (e: any) => {
@@ -59,15 +62,19 @@ export default function PostList() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-8">
+
             <h3>Posts</h3>
+
             {isLoading &&
               <div className="text-center">
                 <div className="spinner-border" role="status"><span className="visually-hidden">Loading</span></div>
               </div>
             }
+
             {posts.length <= 0 && <div>No posts available.{' '}
               <a href="/">Create some!</a>
             </div>}
+
             <div>
               {info !== '' &&
                 <div className="alert alert-info alert-dismissible fade show" role="alert">{info}
@@ -76,10 +83,16 @@ export default function PostList() {
               }
             </div>
             <div>
-              {posts && posts.map((post, index) => <PostCard key={index} post={post} handleDelete={handleDelete} />)}
+              {error !== '' &&
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">{error}
+                  <button type="button" onClick={() => setError('')} className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              }
             </div>
 
-
+            <div>
+              {posts && posts.map((post, index) => <PostCard key={index} post={post} handleDelete={handleDelete} />)}
+            </div>
 
             <div className="d-flex justify-content-center">
               <ReactPaginate

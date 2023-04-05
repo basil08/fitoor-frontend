@@ -24,8 +24,6 @@ Filter component
 
 Responsive design
 
-
-
 ---
 
 Integrate PF into Fitoor
