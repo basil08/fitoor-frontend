@@ -22,13 +22,13 @@ export default function PostList() {
 
     const data = await fetchPosts(skip, limit);
     if (!data.error) {
-      setPosts(data.posts);
-      setTotalPostCount(data.count);
-      setPageCount(Math.ceil(data.count / limit));
+      setPosts(data.message.posts);
+      setTotalPostCount(data.message.count);
+      setPageCount(Math.ceil(data.message.count / limit));
       setIsLoading(false);
     } else {
       setIsLoading(false);
-      setError(data);
+      setError(data.message);
     }
   }
 

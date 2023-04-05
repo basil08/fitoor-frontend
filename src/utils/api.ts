@@ -1,5 +1,6 @@
 const emoji = require("emoji-dictionary");
 
+// const DEBUG = process.env.DEBUG || false;
 const DEBUG = false;
 const BASE_URL = DEBUG ? 'http://localhost:8080' : 'https://fitoor-backend.vercel.app';
 
@@ -15,6 +16,10 @@ const headers = () => {
     }
 }
 
+const checkJWT = () => {
+    return getJWT() !== null;
+}
+
 const fetchPost = async (postId: string) => {
     const res = await fetch(`${BASE_URL}/api/getPost?postId=${postId}`, {
         method: 'GET'
@@ -23,7 +28,7 @@ const fetchPost = async (postId: string) => {
     if (res.status === 200) {
         return await res.json();
     } else {
-        return { error: true, message: 'Random error'}
+        return { error: true, message: 'Random error' }
     }
 }
 
@@ -31,36 +36,96 @@ const deletePost = async (postId: string) => {
     const res = await fetch(`${BASE_URL}/api/deletePost?postId=${postId}`, {
         method: 'DELETE'
     });
-    
+
     if (res.status === 200) {
         return await res.json();
     } else {
-        return { error: true, message: 'Random error'}
+        return { error: true, message: 'Random error' }
     }
-    
+
+}
+
+const createNewPost = async (postData: string) => {
+    const res: any = await fetch(`${BASE_URL}/api/createPost`, {
+        method: 'POST',
+        body: JSON.stringify({ raw: postData }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (res.status === 201) {
+        return { error: false, message: await res.json() }
+    } else {
+        return { error: true, message: await res.json() };
+    }
 }
 
 const fetchPosts = async (skip: number, limit: number) => {
     const res = await fetch(`${BASE_URL}/api/getPosts?skip=${skip}&limit=${limit}`, {
-      method: 'GET',
-      headers: headers()
+        method: 'GET',
+        headers: headers()
     });
 
     if (res.status === 200) {
-        return await res.json();
+        return { error: false, message: await res.json() };
     } else {
-        return { error: true, message: res }
+        return { error: true, message: await res.json() }
     }
 }
 
-  const parseEmoji = (text: string) => {
+const parseEmoji = (text: string) => {
     return text.replace(/:\w+:/gi, (match) => {
-      const emojiName = match.slice(1, -1);
+        const emojiName = match.slice(1, -1);
 
-      return emoji.getUnicode(emojiName) || match;
+        return emoji.getUnicode(emojiName) || match;
     })
-  }
+}
 
+async function getUserProfile() {
+    const res = await fetch(`${BASE_URL}/auth/userProfile`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getJWT()}`
+        }
+    });
 
+    const data = await res.json();
+    console.log(data);
+    if (res.status === 200) {
+        return { error: false, message: data };
+    } else if (res.status === 401) {
+        return { error: true, message: "User unauthorized" };
+    } else {
+        return { error: true, message: res };
+    }
+}
 
-export { fetchPosts, fetchPost, deletePost, parseEmoji };
+async function logout() {
+    delJWT();
+    window.location.href = '/login';
+}
+
+async function loginUser(email: string, password: string) {
+    const res = await fetch(`${BASE_URL}/auth/loginUser`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    });
+
+    console.log(res.status);
+    if (res.status === 201) {
+        const data = await res.json();
+        setJWT(data['access_token']);
+        return { error: false, message: res };
+    } else if (res.status === 401) {
+        return { error: true, message: "User unauthorized" };
+    } else {
+        return { error: true, message: res };
+    }
+}
+
+export { fetchPosts, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost };
