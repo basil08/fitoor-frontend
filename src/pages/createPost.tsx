@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import Header from "../components/header";
+const emoji = require("emoji-dictionary");
+
 
 export default function CreatePost() {
   const [postData, setPostData] = useState<string | undefined>("");
@@ -14,6 +16,8 @@ export default function CreatePost() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
+    console.log(emoji.names);
+
   }, []);
 
   const handleSubmit = async () => {
@@ -30,7 +34,7 @@ export default function CreatePost() {
       setCreatingNewPost(false);
       return;
     }
-    
+
     const res: any = await fetch(`${BASE_URL}/api/createPost`, {
       method: 'POST',
       body: JSON.stringify({ raw: postData }),
@@ -74,25 +78,53 @@ export default function CreatePost() {
             </div>
           }
 
-          <div className="row">
-            <MDEditor
-              value={postData}
-              height={450}
-              onChange={setPostData}
-              previewOptions={{
-                rehypePlugins: [[rehypeSanitize]],
-              }}
-            />
+          <div className="container">
+
+            <div className="row p-2">
+              <div className="col-9 text-end">
+                <button className="btn btn-primary" onClick={() => handleSubmit()}>
+                  {creatingNewPost && <span>Creating...</span>}
+                  {!creatingNewPost && <span>Submit</span>}
+                </button>
+              </div>
+            </div>
+
+            <div className="row">
+
+              <div className="col-9">
+                <MDEditor
+                  value={postData}
+                  height={450}
+                  onChange={setPostData}
+                  previewOptions={{
+                    rehypePlugins: [[rehypeSanitize]],
+                  }}
+                />
+              </div>
+
+              <div className="col-3">
+                <div className="card">
+                  <div className="card-title text-center fw-bold">Emoji list</div>
+                  <ul className="list-unstyled px-2 ">
+                    {emoji.names.map((name: string, index: number) => {
+                      return <li key={index}>
+                        <div className="row justify-content-end">
+                          <div className="col">{name}</div>
+                          <div className="col text-end">{emoji.unicode[index]}</div>
+                        </div>
+
+                      </li>
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+
         </div>
-        <div className="row p-2">
-          <div className="col text-center">
-            <button className="btn btn-primary" onClick={() => handleSubmit()}>
-              {creatingNewPost && <span>Creating...</span>}
-              {!creatingNewPost && <span>Submit</span>}
-            </button>
-          </div>
-        </div>
+
       </div>
     </>
   );

@@ -13,6 +13,7 @@
     "@uiw/react-md-editor": "^3.20.5",
     "bootstrap": "^5.2.3",
     "dom-to-image": "^2.6.0",
+    "emoji-dictionary": "^1.0.11",
     "katex": "^0.16.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

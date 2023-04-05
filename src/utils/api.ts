@@ -1,5 +1,7 @@
-const DEBUG = true;
-const BASE_URL = DEBUG ? 'http://localhost:8080' : 'http://localhost:8080';
+const emoji = require("emoji-dictionary");
+
+const DEBUG = false;
+const BASE_URL = DEBUG ? 'http://localhost:8080' : 'https://fitoor-backend.vercel.app';
 
 const JWT_KEY = 'FITOOR_JWT';
 const getJWT = () => localStorage.getItem(JWT_KEY);
@@ -51,6 +53,14 @@ const fetchPosts = async (skip: number, limit: number) => {
     }
 }
 
+  const parseEmoji = (text: string) => {
+    return text.replace(/:\w+:/gi, (match) => {
+      const emojiName = match.slice(1, -1);
+
+      return emoji.getUnicode(emojiName) || match;
+    })
+  }
 
 
-export { fetchPosts, fetchPost, deletePost };
+
+export { fetchPosts, fetchPost, deletePost, parseEmoji };

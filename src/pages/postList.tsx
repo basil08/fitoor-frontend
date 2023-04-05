@@ -36,7 +36,6 @@ export default function PostList() {
     getPosts();
   }, [skip, totalPostCount]);
 
-  // TODO
   const handleDelete = async (postId: string) => {
     const data = await deletePost(postId);
 
@@ -59,7 +58,7 @@ export default function PostList() {
       <Header />
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-5">
+          <div className="col-8">
             <h3>Posts</h3>
             {isLoading &&
               <div className="text-center">

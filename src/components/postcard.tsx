@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { parseEmoji } from "../utils/api";
+
 export default function PostCard(props: any) {
   const post = props.post;
   const handleDelete = props.handleDelete;
@@ -19,8 +21,8 @@ export default function PostCard(props: any) {
           </h6>
           <p className="card-text text-black">
             {post.body.length > 50
-              ? post.body.slice(0, 50) + "..."
-              : post.body}
+              ? parseEmoji(post.body.slice(0, 50) + "...")
+              : parseEmoji(post.body)}
           </p>
 
           <div className="text-end">

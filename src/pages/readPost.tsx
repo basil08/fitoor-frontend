@@ -4,6 +4,8 @@ import MDEditor from "@uiw/react-md-editor";
 import Header from "../components/header";
 import { fetchPost } from "../utils/api";
 
+import { parseEmoji } from "../utils/api";
+
 export default function ReadPost() {
   const { postId } = useParams();
   const [postData, setPostData] = useState<any>(null);
@@ -27,22 +29,23 @@ export default function ReadPost() {
     }
   };
 
-  useEffect(() => { getPostData()}, []);
+  useEffect(() => { getPostData() }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
   }, []);
-
 
   return (
     <>
       <Header />
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-6">
+          <div className="col-8">
             {isLoading && (
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+              <div className="text-center p-4">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
             )}
             {postData && (
@@ -54,7 +57,7 @@ export default function ReadPost() {
                     </div>
                   </div>
                   <MDEditor.Markdown
-                    source={postData.raw}
+                    source={parseEmoji(postData.raw)}
                     style={{ whiteSpace: "pre-wrap" }}
                   />
                 </div>
