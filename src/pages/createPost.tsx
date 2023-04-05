@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import Header from "../components/header";
+import { createNewPost } from "../utils/api";
 const emoji = require("emoji-dictionary");
 
 
@@ -16,8 +17,6 @@ export default function CreatePost() {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
-    console.log(emoji.names);
-
   }, []);
 
   const handleSubmit = async () => {
@@ -35,21 +34,15 @@ export default function CreatePost() {
       return;
     }
 
-    const res: any = await fetch(`${BASE_URL}/api/createPost`, {
-      method: 'POST',
-      body: JSON.stringify({ raw: postData }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    if (res.status === 201) {
+    const res = await createNewPost(postData);
+    if (!res.error) {
       setInfo("Created post successfully!");
-      setPostData("");
+      setPostData("");      
     } else {
       setError("Something went wrong, check console!");
       console.log(res);
     }
+
     setCreatingNewPost(false);
   };
 

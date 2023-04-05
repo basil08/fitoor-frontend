@@ -1,3 +1,5 @@
+import { logout } from "../utils/api";
+
 export default function Header() {
   return (
     <>
@@ -30,6 +32,10 @@ export default function Header() {
                 </a>
               </li>
             </ul>
+          </div>
+
+          <div>
+            <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
           </div>
         </div>
       </nav>

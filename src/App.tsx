@@ -8,16 +8,17 @@ import UpdatePost from "./pages/updatePost";
 
 import "./App.css";
 import "./custom.scss";
-
-// Implement all required features and enhancements to Editor
-// required packages are installed: see package.json
-// See this page: https://www.npmjs.com/package/@uiw/react-md-editor
+import Login from "./pages/login";
+import Signup from "./pages/signup";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CreatePost />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
         <Route path="/update/:postId" element={<UpdatePost />} />
         <Route path="/post">
           <Route path="" element={<PostList />} />
