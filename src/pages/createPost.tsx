@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 
+import loginGuard from "../utils/loginguard";
+import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import rehypeSanitize from "rehype-sanitize";
 import Header from "../components/header";
 import { createNewPost } from "../utils/api";
+
+
+
 const emoji = require("emoji-dictionary");
 
 
@@ -14,6 +19,8 @@ export default function CreatePost() {
   const [error, setError] = useState("");
 
   const BASE_URL = 'http://localhost:8080'
+
+  useEffect(loginGuard(useNavigate()), []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-color-mode", "light");
@@ -37,7 +44,7 @@ export default function CreatePost() {
     const res = await createNewPost(postData);
     if (!res.error) {
       setInfo("Created post successfully!");
-      setPostData("");      
+      setPostData("");
     } else {
       setError("Something went wrong, check console!");
       console.log(res);
@@ -51,8 +58,10 @@ export default function CreatePost() {
       <Header />
       <div>
         <div className="container">
-          <div className="row">
-            <h3>New Post</h3>
+          <div className="row p-2 justify-content-center">
+            <div className="col text-center">
+              <h3 className="fw-bold">New Post</h3>
+            </div>
           </div>
           {error &&
             <div className="row">

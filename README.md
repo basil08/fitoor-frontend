@@ -10,7 +10,7 @@
 
 Add images feature
 
-Implement authentication
+~~Implement authentication~~
 
 Public page (for viewing)
 Public / Private post concept

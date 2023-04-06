@@ -1,6 +1,9 @@
-import { logout } from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { checkJWT, logout } from "../utils/api";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <>
       <nav className="navbar navbar-dark navbar-expand-lg bg-dark ">
@@ -35,7 +38,11 @@ export default function Header() {
           </div>
 
           <div>
+            {checkJWT() ? 
             <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
+            : 
+            <button className="btn btn-primary" onClick={() => navigate('/login')}>Login</button>
+          }
           </div>
         </div>
       </nav>

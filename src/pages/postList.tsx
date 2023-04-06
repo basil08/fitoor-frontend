@@ -3,6 +3,8 @@ import ReactPaginate from "react-paginate";
 import Header from "../components/header";
 import PostCard from "../components/postcard";
 import { deletePost, fetchPosts } from "../utils/api";
+import loginGuard from "../utils/loginguard";
+import { useNavigate } from "react-router-dom";
 
 export default function PostList() {
 
@@ -31,6 +33,8 @@ export default function PostList() {
       setError(data.message);
     }
   }
+  
+  useEffect(loginGuard(useNavigate()), []);
 
   useEffect(() => {
     getPosts();
@@ -62,9 +66,13 @@ export default function PostList() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-8">
-
-            <h3>Posts</h3>
-
+            <div className="container">
+              <div className="row p-2 justify-content-center">
+                <div className="col text-center">
+                  <h3 className="fw-bold">New Post</h3>
+                </div>
+              </div>
+            </div>
             {isLoading &&
               <div className="text-center">
                 <div className="spinner-border" role="status"><span className="visually-hidden">Loading</span></div>
