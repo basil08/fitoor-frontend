@@ -1,7 +1,7 @@
 const emoji = require("emoji-dictionary");
 
 // const DEBUG = process.env.DEBUG || false;
-const DEBUG = false;
+const DEBUG = true;
 const BASE_URL = DEBUG ? 'http://localhost:8080' : 'https://fitoor-backend.vercel.app';
 
 const JWT_KEY = 'FITOOR_JWT';
@@ -22,7 +22,8 @@ const checkJWT = () => {
 
 const fetchPost = async (postId: string) => {
     const res = await fetch(`${BASE_URL}/api/getPost?postId=${postId}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: headers()
     });
 
     if (res.status === 200) {
@@ -34,7 +35,8 @@ const fetchPost = async (postId: string) => {
 
 const deletePost = async (postId: string) => {
     const res = await fetch(`${BASE_URL}/api/deletePost?postId=${postId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: headers()
     });
 
     if (res.status === 200) {
@@ -49,9 +51,7 @@ const createNewPost = async (postData: string) => {
     const res: any = await fetch(`${BASE_URL}/api/createPost`, {
         method: 'POST',
         body: JSON.stringify({ raw: postData }),
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: headers()
     });
 
     if (res.status === 201) {
@@ -85,10 +85,7 @@ const parseEmoji = (text: string) => {
 async function getUserProfile() {
     const res = await fetch(`${BASE_URL}/auth/userProfile`, {
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getJWT()}`
-        }
+        headers: headers()
     });
 
     const data = await res.json();
@@ -110,9 +107,7 @@ async function logout() {
 async function loginUser(email: string, password: string) {
     const res = await fetch(`${BASE_URL}/auth/loginUser`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: headers(),
         body: JSON.stringify({ email, password })
     });
 
