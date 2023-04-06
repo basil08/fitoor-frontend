@@ -7,18 +7,15 @@ import rehypeSanitize from "rehype-sanitize";
 import Header from "../components/header";
 import { createNewPost } from "../utils/api";
 
-
-
 const emoji = require("emoji-dictionary");
-
 
 export default function CreatePost() {
   const [postData, setPostData] = useState<string | undefined>("");
   const [creatingNewPost, setCreatingNewPost] = useState(false);
   const [info, setInfo] = useState("");
   const [error, setError] = useState("");
-
-  const BASE_URL = 'http://localhost:8080'
+  const [disableComments, setDisableComments] = useState(false);
+  const [isPrivatePost, setPrivatePost] = useState(false);
 
   useEffect(loginGuard(useNavigate()), []);
 
@@ -41,7 +38,7 @@ export default function CreatePost() {
       return;
     }
 
-    const res = await createNewPost(postData);
+    const res = await createNewPost(postData, disableComments, isPrivatePost);
     if (!res.error) {
       setInfo("Created post successfully!");
       setPostData("");
@@ -52,6 +49,14 @@ export default function CreatePost() {
 
     setCreatingNewPost(false);
   };
+
+  const handleDisableComments = (val: any) => {
+    setDisableComments(val);
+  }
+
+  const handlePrivatePost = (val: any) => {
+    setPrivatePost(val);
+  }
 
   return (
     <>
@@ -83,7 +88,19 @@ export default function CreatePost() {
           <div className="container">
 
             <div className="row p-2">
-              <div className="col-9 text-end">
+              <div className="col-3">
+                <div className="form-check form-switch">
+                  <input className="form-check-input" type="checkbox" id="privateToggle" onChange={(e) => handlePrivatePost(e.target.checked)} />
+                    <label className="form-check-label" htmlFor="privateToggle">Make private?</label>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="form-check form-switch">
+                  <input className="form-check-input" type="checkbox" id="commentsToggle" onChange={(e) => handleDisableComments(e.target.checked)} />
+                    <label className="form-check-label" htmlFor="commentsToggle">Disable comments?</label>
+                </div>
+              </div>
+              <div className="col-3 text-end">
                 <button className="btn btn-primary" onClick={() => handleSubmit()}>
                   {creatingNewPost && <span>Creating...</span>}
                   {!creatingNewPost && <span>Submit</span>}

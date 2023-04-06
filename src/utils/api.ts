@@ -33,6 +33,19 @@ const fetchPost = async (postId: string) => {
     }
 }
 
+const fetchPublicPost = async (username: string, postId: string) => {
+    const res = await fetch(`${BASE_URL}/api/getPublicPost?username=${username}&postId=${postId}`, {
+        method: 'GET',
+    });
+    
+    if (res.status === 200) {
+        return await res.json();
+    } else {
+        return { error: true, message: 'Random error' }
+    }
+    
+}
+
 const deletePost = async (postId: string) => {
     const res = await fetch(`${BASE_URL}/api/deletePost?postId=${postId}`, {
         method: 'DELETE',
@@ -47,15 +60,28 @@ const deletePost = async (postId: string) => {
 
 }
 
-const createNewPost = async (postData: string) => {
+const createNewPost = async (postData: string, disableComments: boolean, isPrivatePost: boolean) => {
     const res: any = await fetch(`${BASE_URL}/api/createPost`, {
         method: 'POST',
-        body: JSON.stringify({ raw: postData }),
+        body: JSON.stringify({ raw: postData, commentsEnabled: !disableComments, isPrivate: isPrivatePost }),
         headers: headers()
     });
 
     if (res.status === 201) {
         return { error: false, message: await res.json() }
+    } else {
+        return { error: true, message: await res.json() };
+    }
+}
+
+const fetchPublicPosts = async (username: string, skip: number, limit: number) => {
+    const res = await fetch(`${BASE_URL}/api/getPublicPosts?username=${username}&skip=${skip}&limi=${limit}`, {
+        method: 'GET',
+        headers: headers()
+    });
+
+    if (res.status === 200) {
+        return { error: false, message: await res.json() };
     } else {
         return { error: true, message: await res.json() };
     }
@@ -123,4 +149,4 @@ async function loginUser(email: string, password: string) {
     }
 }
 
-export { fetchPosts, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost };
+export { fetchPosts, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost };

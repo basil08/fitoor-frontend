@@ -2,25 +2,21 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import Header from "../components/header";
-import { fetchPost } from "../utils/api";
-import loginGuard from "../utils/loginguard";
-import { useNavigate } from "react-router-dom";
+import { fetchPublicPost } from "../utils/api";
 
 import { parseEmoji } from "../utils/api";
 
-export default function ReadPost() {
+export default function PublicReadPost() {
 
-  useEffect(loginGuard(useNavigate()), []);
-
-  const { postId } = useParams();
+  const { username, postId } = useParams();
   const [postData, setPostData] = useState<any>(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const getPostData = async () => {
     setIsLoading(true);
-    if (postId) {
-      const data = await fetchPost(postId);
+    if (postId && username) {
+      const data = await fetchPublicPost(username, postId);
       if (!data.error) {
         console.log(data);
         setPostData(data);
@@ -30,7 +26,7 @@ export default function ReadPost() {
         setIsLoading(false);
       }
     } else {
-      setError("No post Id provided!");
+      setError("No username or postId provided!");
     }
   };
 
