@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import Header from "../components/header";
-import { createNewComment, fetchPublicPost } from "../utils/api";
+import { fetchPublicPost } from "../utils/api";
 
 import { parseEmoji } from "../utils/api";
-import CreateNewCommentForm from "../components/createNewCommentForm";
 import Comments from "../components/comments";
 
 export default function PublicReadPost() {
