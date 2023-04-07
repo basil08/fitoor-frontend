@@ -32,21 +32,7 @@ export default function PublicReadPost() {
     }
   };
 
-  
-  const handleCommentSubmit = async (email: string, nickname: string, text: string) => {
-    setIsLoading(true);
 
-    if (postId) {
-      const res = await createNewComment(postId, email, text, nickname);
-  
-      if (!res.error) {
-        // setInfo
-
-      }
-    }
-    
-    setIsLoading(false);
-}
 
   useEffect(() => { getPostData() }, []);
 
@@ -85,12 +71,20 @@ export default function PublicReadPost() {
           </div>
         </div>
 
-        <div className="row justify-content-center">
-          <div className="col-6">
-            {/* <CreateNewCommentForm handleCommentSubmit={handleCommentSubmit} /> */}
-            <Comments  postId={postId} />
+
+        {postData && postData.commentsEnabled ?
+          <div className="row justify-content-center">
+            <div className="col-6">
+              {/* <CreateNewCommentForm handleCommentSubmit={handleCommentSubmit} /> */}
+              <Comments postId={postId} />
+            </div>
           </div>
-        </div>
+          :
+          <div className="row justify-content-center">
+            <div className="col my-3 text-center">
+              Comments are disabled for this post!
+            </div></div>
+        }
       </div>
     </>
   );

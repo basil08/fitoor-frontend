@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { GOOGLE_RECAPTCHA_SITE_KEY } from "../utils/api";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function CreateNewCommentForm(props: any) {
     const handleCommentSubmit = props.handleCommentSubmit;
+    const recaptchaRef = props.recaptchaRef;
 
     const [nickname, setNickname] = useState("");
     const [text, setText] = useState("");
@@ -12,9 +15,8 @@ export default function CreateNewCommentForm(props: any) {
 
     const [isLoading, setIsLoading] = useState(false);
 
-
     return <>
-        <div className="form p-3 bg-gray100 rounded my-2">
+        <form className="form p-3 bg-gray100 rounded my-2">
 
             {error &&
                 <div className="row">
@@ -49,6 +51,7 @@ export default function CreateNewCommentForm(props: any) {
                     </div>
                 </div>
 
+
                 <div className="col">
                     <div className="my-3">
                         <label htmlFor="nickname" className="form-label">
@@ -62,37 +65,51 @@ export default function CreateNewCommentForm(props: any) {
                             onChange={(e) => setNickname(e.target.value)}
                         />
                     </div>
-
                 </div>
             </div>
 
 
             <div className="row">
-                <div className="col-10">
+                <div className="col">
                     <div className="my-3">
-                        <input
-                            type="text"
+                        <textarea
+                            rows={8}
                             className="form-control"
                             id="commentText"
                             placeholder="Your comment..."
                             onChange={(e) => setText(e.target.value)}
                         />
                     </div>
-
-                </div>
-                <div className="col">
-
-                    <div className="my-3 row justify-content-center">
-                        <button className={`btn btn-primary ${isLoading ? 'disabled' : ''}`} onClick={() => handleCommentSubmit(email, nickname, text)}>
-                            {isLoading && <span>Submitting...</span>}
-                            {!isLoading && <span>Submit</span>}
-
-                        </button>
-                    </div>
-
                 </div>
             </div>
 
-        </div>
+            <div className="row">
+                <p className="small text-muted">You can use emojis too!</p>
+            </div>
+
+            <div className="row justify-content-end">
+                <div className="my-3 row justify-content-center">
+                    <div className="col text-end">
+                        <button className={`btn btn-primary ${isLoading ? 'disabled' : ''}`} onClick={() => handleCommentSubmit(email, nickname, text)}>
+                            {isLoading && <span>Submitting...</span>}
+                            {!isLoading && <span>Submit</span>}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="row">
+                <div className="col">
+                    <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={GOOGLE_RECAPTCHA_SITE_KEY}
+                        size="invisible"
+                    />
+                </div>
+            </div>
+
+
+        </form >
     </>
 }

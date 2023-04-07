@@ -9,6 +9,8 @@ const getJWT = () => localStorage.getItem(JWT_KEY);
 const delJWT = () => localStorage.removeItem(JWT_KEY);
 const setJWT = (JWT: string) => localStorage.setItem(JWT_KEY, JWT);
 
+const GOOGLE_RECAPTCHA_SITE_KEY='6LdwrmolAAAAAIXfZLAzPrOmYfVamVAcsbd7iaRv';
+
 const headers = () => {
     return {
         'Content-Type': 'application/json',
@@ -182,7 +184,7 @@ async function createNewUser(username: string, email: string, password: string) 
     }
 }
 
-async function createNewComment(postId: string, email: string, text: string, nickname: string) {
+async function createNewComment(postId: string, email: string, text: string, nickname: string, captchaToken: string) {
     const res = await fetch(`${BASE_URL}/comment/create`, {
         method: 'POST',
         headers: headers(),
@@ -191,6 +193,7 @@ async function createNewComment(postId: string, email: string, text: string, nic
             email: email,
             text: text,
             nickname: nickname,
+            captchaToken: captchaToken
         })
     });
 
@@ -206,4 +209,4 @@ async function createNewComment(postId: string, email: string, text: string, nic
     }
 }
 
-export { fetchPosts, createNewUser, createNewComment, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost, fetchComments };
+export { fetchPosts, createNewUser, createNewComment, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost, fetchComments, GOOGLE_RECAPTCHA_SITE_KEY };

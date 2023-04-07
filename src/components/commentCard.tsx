@@ -1,3 +1,5 @@
+import { parseEmoji } from "../utils/api";
+
 var dayjs = require('dayjs');
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -18,7 +20,7 @@ export default function CommentCard(props: any) {
                 </p>
             </div>
             <div className="card-body">
-                <p>{comment.text}</p>
+                {parseEmoji(comment.text)}
             </div>
         </div>
     </>

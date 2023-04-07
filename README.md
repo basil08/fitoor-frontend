@@ -16,7 +16,7 @@
 
 Add images feature
 
-(Public) Comment System
+~~(Public) Comment System~~
 
 Implement tags
 Tag based search features
@@ -46,5 +46,6 @@ Integrate Library into Fitoor
 7. ~~Header should have link to signup if not logged in~~
 8. ~~Implement signup~~
 9. Use Icons to liven up the aesthetics :')
-10. Add Captcha for comments
-11. Add emoji support to comments
+10. ~~Add Captcha for comments~~
+11. ~~Add emoji support to comments~~
+12. Load more feature to comments list
