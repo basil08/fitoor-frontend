@@ -1,7 +1,7 @@
 const emoji = require("emoji-dictionary");
 
 // const DEBUG = process.env.DEBUG || false;
-const DEBUG = true;
+const DEBUG = false;
 const BASE_URL = DEBUG ? 'http://localhost:8080' : 'https://fitoor-backend.vercel.app';
 
 const JWT_KEY = 'FITOOR_JWT';
