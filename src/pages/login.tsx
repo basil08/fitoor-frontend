@@ -12,14 +12,22 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLoginSubmit = async () => {
-        const res = await loginUser(email, password);
 
+    const [error, setError] = useState("");
+    const [info, setInfo] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleLoginSubmit = async () => {
+        setIsLoading(true);
+        const res = await loginUser(email, password);
         if (!res.error) {
+            setInfo(res.message);
             navigate('/');
         } else {
-            window.alert(res.message);
+            setError(res.message);
         }
+        setIsLoading(false);
     }
 
     return (
@@ -31,6 +39,22 @@ export default function Login() {
                     <div className="col-5">
                         <div className="fw-bold fs-4">Login</div>
 
+                        {error &&
+                            <div className="row">
+                                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error:</strong> {error}
+                                    <button type="button" className="btn-close" onClick={() => setError("")} data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        }
+                        {info &&
+                            <div className="row">
+                                <div className="alert alert-info alert-dismissible fade show" role="alert">
+                                    <strong>Info:</strong> {info}
+                                    <button type="button" className="btn-close" onClick={() => setInfo("")} data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        }
                         <div className="my-3">
                             <label htmlFor="emailField" className="form-label">
                                 Email
@@ -51,7 +75,24 @@ export default function Login() {
                         </div>
 
                         <div className="my-3 row justify-content-center">
-                            <button className="btn btn-primary" onClick={() => handleLoginSubmit()}>Submit</button>
+                            <button className={`btn btn-primary ${isLoading ? 'disabled' : ''}`} onClick={() => handleLoginSubmit()}>
+                            {isLoading && <span>Logging in...</span>}
+                                    {!isLoading && <span>Login</span>}
+
+                            </button>
+                        </div>
+
+                        <div className="my-3 row justify-content-center">
+                            If you don't have an account, you can
+                            register
+                            now!
+                        </div>
+                        <div className="my-3 row justify-content-center">
+                            <div className="col text-end">
+                                <button className={`btn btn-secondary`} onClick={() => navigate('/signup')}>
+                                 Sign up
+                                </button>
+                            </div>
                         </div>
 
                     </div>

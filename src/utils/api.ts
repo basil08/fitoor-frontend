@@ -137,16 +137,36 @@ async function loginUser(email: string, password: string) {
         body: JSON.stringify({ email, password })
     });
 
-    console.log(res.status);
     if (res.status === 201) {
         const data = await res.json();
         setJWT(data['access_token']);
-        return { error: false, message: res };
-    } else if (res.status === 401) {
-        return { error: true, message: "User unauthorized" };
+        return { error: false, message: data.message };
+    } else if (res.status === 401) { // unauthorized
+        const data = await res.json();
+        return { error: true, message: data.message };
     } else {
-        return { error: true, message: res };
+        const data = await res.json();
+        return { error: true, message: data.message };
     }
 }
 
-export { fetchPosts, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost };
+async function createNewUser(username: string, email: string, password: string) {
+    const res = await fetch(`${BASE_URL}/auth/createUser`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({ username: username, email: email, password: password })
+    });
+
+    if (res.status === 201) {
+        const data = await res.json();
+        return { error: false, message: data.message};
+    } else if (res.status === 400) {
+        const data = await res.json();
+        return { error: true, message: data.message};
+    } else {
+        const data = await res.json();
+        return { error: true, message: data.message};
+    }
+}
+
+export { fetchPosts, createNewUser, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost };
