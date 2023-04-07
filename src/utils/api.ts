@@ -37,13 +37,13 @@ const fetchPublicPost = async (username: string, postId: string) => {
     const res = await fetch(`${BASE_URL}/api/getPublicPost?username=${username}&postId=${postId}`, {
         method: 'GET',
     });
-    
+
     if (res.status === 200) {
         return await res.json();
     } else {
         return { error: true, message: 'Random error' }
     }
-    
+
 }
 
 const deletePost = async (postId: string) => {
@@ -89,6 +89,19 @@ const fetchPublicPosts = async (username: string, skip: number, limit: number) =
 
 const fetchPosts = async (skip: number, limit: number) => {
     const res = await fetch(`${BASE_URL}/api/getPosts?skip=${skip}&limit=${limit}`, {
+        method: 'GET',
+        headers: headers()
+    });
+
+    if (res.status === 200) {
+        return { error: false, message: await res.json() };
+    } else {
+        return { error: true, message: await res.json() }
+    }
+}
+
+const fetchComments = async (postId: string) => {
+    const res = await fetch(`${BASE_URL}/comment/getMany?postId=${postId}`, {
         method: 'GET',
         headers: headers()
     });
@@ -159,14 +172,38 @@ async function createNewUser(username: string, email: string, password: string) 
 
     if (res.status === 201) {
         const data = await res.json();
-        return { error: false, message: data.message};
+        return { error: false, message: data.message };
     } else if (res.status === 400) {
         const data = await res.json();
-        return { error: true, message: data.message};
+        return { error: true, message: data.message };
     } else {
         const data = await res.json();
-        return { error: true, message: data.message};
+        return { error: true, message: data.message };
     }
 }
 
-export { fetchPosts, createNewUser, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost };
+async function createNewComment(postId: string, email: string, text: string, nickname: string) {
+    const res = await fetch(`${BASE_URL}/comment/create`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({
+            postId: postId,
+            email: email,
+            text: text,
+            nickname: nickname,
+        })
+    });
+
+    if (res.status === 201) {
+        const data = await res.json();
+        return { error: false, message: data.message };
+    } else if (res.status === 400) {
+        const data = await res.json();
+        return { error: true, message: data.message };
+    } else {
+        const data = await res.json();
+        return { error: true, message: data.message };
+    }
+}
+
+export { fetchPosts, createNewUser, createNewComment, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost, fetchComments };

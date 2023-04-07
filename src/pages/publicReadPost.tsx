@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
 import Header from "../components/header";
-import { fetchPublicPost } from "../utils/api";
+import { createNewComment, fetchPublicPost } from "../utils/api";
 
 import { parseEmoji } from "../utils/api";
+import CreateNewCommentForm from "../components/createNewCommentForm";
+import Comments from "../components/comments";
 
 export default function PublicReadPost() {
 
@@ -29,6 +31,22 @@ export default function PublicReadPost() {
       setError("No username or postId provided!");
     }
   };
+
+  
+  const handleCommentSubmit = async (email: string, nickname: string, text: string) => {
+    setIsLoading(true);
+
+    if (postId) {
+      const res = await createNewComment(postId, email, text, nickname);
+  
+      if (!res.error) {
+        // setInfo
+
+      }
+    }
+    
+    setIsLoading(false);
+}
 
   useEffect(() => { getPostData() }, []);
 
@@ -64,6 +82,13 @@ export default function PublicReadPost() {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+
+        <div className="row justify-content-center">
+          <div className="col-6">
+            {/* <CreateNewCommentForm handleCommentSubmit={handleCommentSubmit} /> */}
+            <Comments  postId={postId} />
           </div>
         </div>
       </div>

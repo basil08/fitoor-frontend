@@ -7,8 +7,8 @@
 
 $font-family-base: 'Open Sans';
 
-// $theme-colors: (
-//   'red': #d21818,
-// );
+$theme-colors: map-merge($map1: $theme-colors, $map2: (
+    "gray100": #ddd
+));
 
 @import '~bootstrap/scss/bootstrap.scss';

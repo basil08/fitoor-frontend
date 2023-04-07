@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.0",
     "@uiw/react-md-editor": "^3.20.5",
     "bootstrap": "^5.2.3",
+    "dayjs": "^1.11.7",
     "dom-to-image": "^2.6.0",
     "emoji-dictionary": "^1.0.11",
     "katex": "^0.16.4",
