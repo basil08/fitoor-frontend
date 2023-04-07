@@ -43,6 +43,6 @@ Integrate Library into Fitoor
 4. add theme toggle button
 5. Autocomplete widget for emoji support / Make emoji list to overflow into scrollable view
 6. Login page should have a link to signup
-7. Header should have link to signup if not logged in
-8. Implement signup
+7. ~~Header should have link to signup if not logged in~~
+8. ~~Implement signup~~
 9. Use Icons to liven up the aesthetics :')

@@ -38,11 +38,14 @@ export default function Header() {
           </div>
 
           <div>
-            {checkJWT() ? 
-            <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
-            : 
-            <button className="btn btn-primary" onClick={() => navigate('/login')}>Login</button>
-          }
+            {checkJWT() ?
+              <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
+              :
+              <div className="mx-2">
+                <button className="btn btn-primary" onClick={() => navigate('/login')}>Login</button>
+                <a href="#" className="text-decoration-none text-white px-4" onClick={(e) => { e.preventDefault(); navigate('/signup');}}>Signup</a>
+              </div>
+            }
           </div>
         </div>
       </nav>
