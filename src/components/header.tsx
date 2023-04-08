@@ -1,8 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { checkJWT, logout } from "../utils/api";
+import { checkJWT, getUserProfile, logout } from "../utils/api";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>();
+
+  const getUser = async () => {
+    const res = await getUserProfile();
+
+    if (!res.error) {
+      setUser(res.message);
+    } else {
+      console.log("Cannot fetch USER");
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <>
@@ -39,11 +55,24 @@ export default function Header() {
 
           <div>
             {checkJWT() ?
-              <button className="btn btn-primary" onClick={() => logout()}>Logout</button>
+              <>
+                <div className="dropdown">
+                  <a className="dropdown-toggle text-decoration-none text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {user ? user.username : 'Username'}
+                  </a>
+                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li>
+                      <button className="btn btn-primary dropdown-item" onClick={() => logout()}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              </>
               :
               <div className="mx-2">
                 <button className="btn btn-primary" onClick={() => navigate('/login')}>Login</button>
-                <a href="#" className="text-decoration-none text-white px-4" onClick={(e) => { e.preventDefault(); navigate('/signup');}}>Signup</a>
+                <a href="#" className="text-decoration-none text-white px-4" onClick={(e) => { e.preventDefault(); navigate('/signup'); }}>Signup</a>
               </div>
             }
           </div>

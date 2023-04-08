@@ -130,7 +130,6 @@ async function getUserProfile() {
     });
 
     const data = await res.json();
-    console.log(data);
     if (res.status === 200) {
         return { error: false, message: data };
     } else if (res.status === 401) {
