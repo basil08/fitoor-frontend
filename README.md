@@ -14,6 +14,10 @@
 ~~Public page (for viewing)~~
 ~~Public / Private post concept~~
 
+
+Separate test DB from main DB
+Make DEBUG mroe dynamic FFS
+
 Add images feature
 
 ~~(Public) Comment System~~
@@ -42,10 +46,13 @@ Integrate Library into Fitoor
 3. Add limit switch component to postList (number of posts per page)
 4. add theme toggle button
 5. Autocomplete widget for emoji support / Make emoji list to overflow into scrollable view
-6. Login page should have a link to signup
+6. ~~Login page should have a link to signup~~
 7. ~~Header should have link to signup if not logged in~~
 8. ~~Implement signup~~
 9. Use Icons to liven up the aesthetics :')
 10. ~~Add Captcha for comments~~
 11. ~~Add emoji support to comments~~
 12. Load more feature to comments list
+13. ~~Show logged in as ....~~
+14. Autosave draft posts
+15. 
