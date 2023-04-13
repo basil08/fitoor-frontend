@@ -24,9 +24,9 @@ export default function Header() {
     <>
       <nav className="navbar navbar-dark navbar-expand-lg bg-dark ">
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
+          <span className="navbar-brand">
             Fitoor
-          </a>
+          </span>
 
           <button
             className="navbar-toggler"
@@ -41,6 +41,15 @@ export default function Header() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  aria-current="page"
+                  href="/"
+                >
+                  New Post
+                </a>
+              </li>
               <li className="nav-item">
                 <a
                   className="nav-link"

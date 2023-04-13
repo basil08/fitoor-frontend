@@ -69,7 +69,7 @@ export default function PostList() {
             <div className="container">
               <div className="row p-2 justify-content-center">
                 <div className="col text-center">
-                  <h3 className="fw-bold">New Post</h3>
+                  <h3 className="fw-bold">Your Posts</h3>
                 </div>
               </div>
             </div>

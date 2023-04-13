@@ -31,8 +31,17 @@ const fetchPost = async (postId: string) => {
     if (res.status === 200) {
         return await res.json();
     } else {
-        return { error: true, message: 'Random error' }
+        return { error: true, message: 'Doesn\'t not exist.' }
     }
+}
+
+const updatePost = async (postId: string, raw: string) => {
+    const res = await fetch(`${BASE_URL}/api/update/${postId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ postData: raw }),
+        headers: headers()
+    });
+    return await res.json();
 }
 
 const fetchPublicPost = async (username: string, postId: string) => {
@@ -208,4 +217,4 @@ async function createNewComment(postId: string, email: string, text: string, nic
     }
 }
 
-export { fetchPosts, createNewUser, createNewComment, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost, fetchComments, GOOGLE_RECAPTCHA_SITE_KEY };
+export { fetchPosts, createNewUser, createNewComment, fetchPost, deletePost, parseEmoji, checkJWT, getUserProfile, loginUser, logout, createNewPost, fetchPublicPosts, fetchPublicPost, fetchComments, updatePost, GOOGLE_RECAPTCHA_SITE_KEY };
