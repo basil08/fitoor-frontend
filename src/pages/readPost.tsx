@@ -58,7 +58,7 @@ export default function ReadPost() {
                 <div className="col p-3 mt-2 rounded border">
                   <div className="row">
                     <div className="col text-muted text-small">
-                      <p>{new Date(postData.timestamp).toLocaleDateString()}</p>
+                      <p>{new Date(postData.timestamp).toLocaleString()}</p>
                     </div>
                   </div>
                   <MDEditor.Markdown
