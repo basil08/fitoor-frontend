@@ -72,7 +72,7 @@ export default function CreatePost() {
             <div className="row">
               <div className="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error:</strong> {error}
-                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" className="btn-close" onClick={() => setError('')} data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
           }
@@ -80,7 +80,7 @@ export default function CreatePost() {
             <div className="row">
               <div className="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Info:</strong> {info}
-                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" className="btn-close" onClick={() => setInfo('')} data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             </div>
           }

@@ -57,7 +57,7 @@ export default function PublicPosts() {
             </div>
 
             <div className="row justify-content-center">
-                <div className="col-8 text-center">
+                <div className="col-8">
 
                     {/* loading posts */}
                     {isLoading &&

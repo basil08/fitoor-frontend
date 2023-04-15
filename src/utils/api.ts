@@ -35,10 +35,10 @@ const fetchPost = async (postId: string) => {
     }
 }
 
-const updatePost = async (postId: string, raw: string) => {
+const updatePost = async (postId: string, raw: string, isPrivate: boolean, disableComments: boolean) => {
     const res = await fetch(`${BASE_URL}/api/update/${postId}`, {
         method: 'PATCH',
-        body: JSON.stringify({ postData: raw }),
+        body: JSON.stringify({ postData: raw, isPrivate: isPrivate, disableComments: disableComments }),
         headers: headers()
     });
     return await res.json();
