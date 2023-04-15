@@ -58,7 +58,13 @@ export default function ReadPost() {
                 <div className="col p-3 mt-2 rounded border">
                   <div className="row">
                     <div className="col text-muted text-small">
-                      <p>{new Date(postData.timestamp).toLocaleString()}</p>
+                      <p>{new Date(postData.timestamp).toLocaleString()}
+                        {postData.lastUpdated !== null && <span>| Last updated: {new Date(postData.lastUpdated).toLocaleString()}</span>}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col text-muted text-small">
+                      {postData.isPrivate ? 'private' : 'public'} | Comments: {postData.commentsEnabled ? 'enabled' : 'disabled'}
                     </div>
                   </div>
                   <MDEditor.Markdown

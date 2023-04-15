@@ -40,9 +40,12 @@ export default function PostCard(props: any) {
           }
 
           <h6 className="card-subtitle mb-2 text-muted">
-            {dayjs(post.timestamp).fromNow()}
+            {post.lastUpdated !== null ?
+              dayjs(post.lastUpdated).fromNow() :
+              dayjs(post.timestamp).fromNow()
+            }
           </h6>
-          <p className="card-text text-black">
+          <p className="card-text text-black ">
             {post.body.length > 50
               ?
               <MDEditor.Markdown source={
@@ -59,38 +62,37 @@ export default function PostCard(props: any) {
             }
           </p>
           <div className="container">
-            <div className="row text-end">
+            {handleDelete &&
+              <div className="row">
+                <div className="col text-end">
+                  <a href={`/update/${post._id}`}>Update</a>
+                </div>
 
-              <div className="col-11">
-                <a href={`/update/${post._id}`}>Update</a>
+                <div className="col text-end">
+                  <button className="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModalConfirmation">
+                    Delete
+                  </button>
+                </div>
               </div>
-              {handleDelete &&
-                <>
-                  <div className="col-12">
-                    <button className="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModalConfirmation">
-                      Delete
-                    </button>
+            }
+            <div className="modal fade" id="deleteModalConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="staticBackdropLabel">Are you sure?</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div className="modal fade" id="deleteModalConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5 className="modal-title" id="staticBackdropLabel">Are you sure?</h5>
-                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                          You are about to delete post {post.title}! Do you wish to continue?
-                        </div>
-                        <div className="modal-footer">
-                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <button type="button" className="btn btn-primary" onClick={() => handleDelete(post._id)} data-bs-dismiss="modal">Yes</button>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="modal-body">
+                    You are about to delete post {post.title}! Do you wish to continue?
                   </div>
-                </>
-              }
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" className="btn btn-primary" onClick={() => handleDelete(post._id)} data-bs-dismiss="modal">Yes</button>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
