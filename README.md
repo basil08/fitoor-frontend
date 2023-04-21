@@ -9,25 +9,26 @@
 7. ~~emoji support!~~
 
 
+Responsive design
+
+Add images feature
+
 ~~Implement authentication~~
 
 ~~Public page (for viewing)~~
 ~~Public / Private post concept~~
 
 
-Separate test DB from main DB
-Make DEBUG mroe dynamic FFS
-
-Add images feature
-
 ~~(Public) Comment System~~
 
 Implement tags
 Tag based search features
 
+Separate test DB from main DB
+Make DEBUG mroe dynamic FFS
+
 Filter component
 
-Responsive design
 
 ---
 
