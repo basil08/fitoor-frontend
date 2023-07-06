@@ -19,24 +19,27 @@ export default function PostCard(props: any) {
       <div className="card p-1 m-2 rounded">
         <div className="card-body">
           {username ?
-            <a href={`${username}/post/${post._id}`} className="text-decoration-none">
-              <h5 className="card-title">
-                <MDEditor.Markdown
-                  source={parseEmoji(post.title)}
-                  style={{ whiteSpace: "pre-wrap" }}
-                />
-              </h5>
-            </a>
+            <div data-color-mode="light">
+              <a href={`${username}/post/${post._id}`} className="text-decoration-none">
+                <h5 className="card-title">
+                  <MDEditor.Markdown
+                    source={parseEmoji(post.title)}
+                    style={{ whiteSpace: "pre-wrap" }}
+                  />
+                </h5>
+              </a>
+            </div>
             :
-            <a href={`/post/${post._id}`} className="text-decoration-none">
-              <h5 className="card-title">
-                <MDEditor.Markdown
-                  source={parseEmoji(post.title)}
-                  style={{ whiteSpace: "pre-wrap" }}
-                />
-              </h5>
-            </a>
-
+            <div data-color-mode="light">
+              <a href={`/post/${post._id}`} className="text-decoration-none">
+                <h5 className="card-title">
+                  <MDEditor.Markdown
+                    source={parseEmoji(post.title)}
+                    style={{ whiteSpace: "pre-wrap" }}
+                  />
+                </h5>
+              </a>
+            </div>
           }
 
           <h6 className="card-subtitle mb-2 text-muted">
@@ -46,20 +49,22 @@ export default function PostCard(props: any) {
             }
           </h6>
           <p className="card-text text-black ">
-            {post.body.length > 50
-              ?
-              <MDEditor.Markdown source={
-                parseEmoji(post.body.slice(0, 50) + "...")
+            <div data-color-mode="light">
+              {post.body.length > 50
+                ?
+                <MDEditor.Markdown source={
+                  parseEmoji(post.body.slice(0, 50) + "...")
+                }
+                  style={{ whiteSpace: "pre-wrap" }}
+                />
+                :
+                <MDEditor.Markdown source={
+                  parseEmoji(post.body)
+                }
+                  style={{ whiteSpace: "pre-wrap" }}
+                />
               }
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-              :
-              <MDEditor.Markdown source={
-                parseEmoji(post.body)
-              }
-                style={{ whiteSpace: "pre-wrap" }}
-              />
-            }
+            </div>
           </p>
           <div className="container">
             {handleDelete &&
