@@ -8,6 +8,8 @@ import UpdatePost from "./pages/updatePost";
 import PublicPosts from "./pages/publicPosts";
 import PageNotFound from "./pages/pageNotFound";
 import PublicReadPost from "./pages/publicReadPost";
+import JoinRoom from "./pages/joinRoom";
+import ChatRoom from "./pages/chatRoom";
 
 import "./App.css";
 import "./custom.scss";
@@ -18,11 +20,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CreatePost />} />
+        {/* <Route path="/" element={<CreatePost />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} /> */}
 
-        <Route path="/u">
+        <Route path="/joinroom" element={<JoinRoom />} />
+        <Route path="/chatroom" element={<ChatRoom />} />
+        
+
+        {/* <Route path="/u">
           <Route path=":username" element={<PublicPosts />} />
           <Route path=":username/post/:postId" element={<PublicReadPost />} />
         </Route>
@@ -31,9 +37,9 @@ function App() {
         <Route path="/post">
           <Route path="" element={<PostList />} />
           <Route path=":postId" element={<ReadPost />} />
-        </Route>
+        </Route> */}
 
-        <Route path="*" element={<PageNotFound />} />
+        {/* <Route path="*" element={<PageNotFound />} /> */}
       </Routes>
     </BrowserRouter>
   );
